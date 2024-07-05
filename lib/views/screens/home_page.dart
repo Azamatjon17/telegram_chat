@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
                 id: users[index].id,
                 name: users[index]['name'],
                 userId: users[index]['user_id'],
+                userToken: users[index]['user_token'],
               );
 
               return Container(

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:telegram_chat/services/firebase_push_noticiction.dart';
 import 'package:telegram_chat/services/user_service.dart';
 
 class Authuserfairbases {
@@ -13,8 +14,13 @@ class Authuserfairbases {
   }) async {
     try {
       final user = await firaebase.createUserWithEmailAndPassword(email: email, password: password);
+      final userToken = await FirebasePushNoticiction.token;
 
-      await userService.addUser(name, user.user!.uid);
+      await userService.addUser(
+        name,
+        user.user!.uid,
+        userToken!,
+      );
     } catch (e) {
       rethrow;
     }

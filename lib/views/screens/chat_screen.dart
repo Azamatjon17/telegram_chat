@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:telegram_chat/models/message.dart';
 import 'package:telegram_chat/models/user.dart';
+import 'package:telegram_chat/services/firebase_push_noticiction.dart';
 import 'package:telegram_chat/services/user_service.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -189,6 +190,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         color: Theme.of(context).primaryColor,
                         onPressed: () async {
                           if (textController.text.trim().isEmpty) return;
+                          print(widget.user.userToken);
+                          bool sendet = await FirebasePushNoticiction.sendMessagetoUser(token: widget.user.userToken, userName: "ali", text: textController.text);
+                          print(sendet);
 
                           await userService.messageService.addMessage(
                             Message(
