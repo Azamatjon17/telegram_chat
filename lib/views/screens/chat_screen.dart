@@ -190,9 +190,6 @@ class _ChatScreenState extends State<ChatScreen> {
                         color: Theme.of(context).primaryColor,
                         onPressed: () async {
                           if (textController.text.trim().isEmpty) return;
-                          print(widget.user.userToken);
-                          bool sendet = await FirebasePushNoticiction.sendMessagetoUser(token: widget.user.userToken, userName: "ali", text: textController.text);
-                          print(sendet);
 
                           await userService.messageService.addMessage(
                             Message(
@@ -203,7 +200,11 @@ class _ChatScreenState extends State<ChatScreen> {
                             ),
                             chatRoomId,
                           );
+                          String username = await userService.getUserName();
+                          String text = textController.text;
                           textController.clear();
+                          bool sendet = await FirebasePushNoticiction.sendMessagetoUser(token: widget.user.userToken, userName: username, text: text);
+
                           _scrollToBottom(); // Scroll to bottom when a new message is added
                         },
                       ),
